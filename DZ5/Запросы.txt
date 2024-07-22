@@ -1,0 +1,71 @@
+--Запрос на получение всех студентов и курсов, на которые они записаны
+
+SELECT Students.first_name, Students.last_name, Courses.course_name, Courses.description
+FROM Students
+JOIN Enrollments ON Enrollments.student_id = Students.id
+JOIN Courses ON Courses.id = Enrollments.course_id;
+
+--Запрос на получение всех курсов и преподавателей, которые их преподают
+
+SELECT Courses.course_name, Courses.description, Teachers.first_name, Teachers.last_name
+FROM Courses
+JOIN Schedule ON Schedule.course_id = Courses.id
+JOIN Teachers ON Teachers.id = Schedule.teacher_id;
+
+--Запрос на получение всех записей студентов на курсы и их оценок
+
+SELECT *
+FROM Students
+JOIN Enrollments ON Enrollments.student_id = Students.id;
+
+--Запрос на получение всех преподавателей и курсов, которые они ведут, включая курсы без преподавателей
+
+SELECT Teachers.first_name, Teachers.last_name, Courses.course_name, Courses.description
+FROM Courses
+LEFT JOIN Schedule ON Schedule.course_id = Courses.id
+LEFT JOIN Teachers ON Teachers.id = Schedule.teacher_id;
+
+--Запрос на получение всех курсов и студентов, записанных на них, включая курсы без студентов
+
+SELECT Courses.course_name, Courses.description, Students.first_name, Students.last_name
+FROM Courses
+RIGHT JOIN Enrollments ON Enrollments.course_id = Courses.id
+LEFT JOIN Students ON Students.id = Enrollments.student_id;
+
+--Запрос на получение всех студентов и курсов, на которые они записаны, включая студентов без записей на курсы
+
+SELECT Students.first_name, Students.last_name, Courses.course_name, Courses.description
+FROM Students
+LEFT JOIN Enrollments ON Enrollments.student_id = Students.id
+LEFT JOIN Courses ON Courses.id = Enrollments.course_id;
+
+--Запрос на получение всех курсов и расписания занятий по ним
+
+SELECT Courses.course_name, Courses.description, Teachers.first_name, 
+Teachers.last_name, Schedule.classroom, Schedule.class_date
+FROM Courses
+JOIN Schedule ON Schedule.course_id = Courses.id
+JOIN Teachers ON Teachers.id = Schedule.teacher_id;
+
+--Запрос на получение всех студентов и их оценок по курсам, включая студентов без оценок
+
+SELECT Students.first_name, Students.last_name, Courses.course_name, Courses.description,
+Enrollments.grade
+FROM Students
+RIGHT JOIN Enrollments ON Enrollments.student_id = Students.id
+JOIN Courses ON Courses.id = Enrollments.course_id;
+
+--Запрос на получение всех курсов и преподавателей, которые их ведут, включая курсы без преподавателей
+
+SELECT Courses.course_name, Courses.description, Teachers.first_name, Teachers.last_name
+FROM Courses
+LEFT JOIN Schedule ON Schedule.course_id = Courses.id
+LEFT JOIN Teachers ON Teachers.id = Schedule.teacher_id;
+
+--Запрос на получение всех преподавателей и курсов, которые они ведут, включая преподавателей без курсов
+
+SELECT Teachers.first_name, Teachers.last_name, Courses.course_name, Courses.description
+FROM Teachers
+LEFT JOIN Schedule ON Schedule.teacher_id = Teachers.id
+LEFT JOIN Courses ON Courses.id = Schedule.course_id
+WHERE Teachers.first_name != '';
