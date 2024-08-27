@@ -1,0 +1,44 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    age INTEGER,
+    phone INTEGER);
+    
+CREATE TABLE products (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    product_name TEXT,
+    price INTEGER
+    );
+    
+CREATE TABLE orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_users INTEGER,
+    date TEXT,
+    FOREIGN KEY (id_users) REFERENCES users(id)
+    );
+    
+CREATE TABLE orders_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_order INTEGER,
+    id_product INTEGER,
+    quantity INTEGER,
+    FOREIGN KEY (id_order) REFERENCES orders(id),
+    FOREIGN KEY (id_product) REFERENCES products(id)
+    );
+
+INSERT INTO users (name, age, phone) VALUES
+    ('Name1', 20, 89999999999),
+    ('Name2', 21, 89999999998),
+    ('Name3', 22, 89999999997),
+    ('Name4', 23, 89999999996),
+    ('Name5', 24, 89999999995);
+    
+INSERT INTO products (product_name, price) VALUES
+    ('Кружка', 200),
+    ('Тарелка', 250),
+    ('Стул', 1200),
+    ('Стол', 2000),
+    ('Холодильник', 20000),
+    ('Микроволновка', 5000),
+    ('Смеситель', 7000),
+    ('Плита', 15000);
